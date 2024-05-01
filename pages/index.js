@@ -1,11 +1,27 @@
-import Image from "next/image";
-import { Inter } from "next/font/google";
-import Room1 from "./Room1.jsx"
+import React, { useState } from 'react';
+import Room from './Room';
+import { roomsData } from './roomsData';
 
-const inter = Inter({ subsets: ["latin"] });
+const Index = () => {
+  const [currentRoomIndex, setCurrentRoomIndex] = useState(0);
 
-export default function Home() {
+  const handleCorrectAnswer = () => {
+    // Set a timeout to wait for 2 seconds before moving to the next room
+    setTimeout(() => {
+      if (currentRoomIndex < roomsData.length - 1) {
+        setCurrentRoomIndex(currentRoomIndex + 1);  // Move to the next room
+      } else {
+        // Optionally handle the end of the room list (e.g., show a completion message or redirect)
+      }
+    }, 2000);  // Delay of 2 seconds matches the toast autoClose time
+  };
+
   return (
-    <Room1 />
+    <Room
+      roomData={roomsData[currentRoomIndex]}
+      onCorrectAnswer={handleCorrectAnswer}
+    />
   );
-}
+};
+
+export default Index;
